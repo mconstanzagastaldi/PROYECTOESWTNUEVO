@@ -1,111 +1,148 @@
-<<<<<<< HEAD
 # SIMULADOR ESWT
+
 **Diseño y análisis computacional de un aplicador piezoeléctrico de ondas de choque extracorpóreas**
 
-Proyecto Académico de Bioingeniería - Universidad Nacional de Entre Ríos (UNER)  
-Facultad de Ingeniería | Cátedra: Taller de Bioingeniería  
-**Autoras:** Gastaldi, María Constanza; Gerstner Soltermann, Marthina; Kessel, Florencia.  
-**Asesor:** Zapata, Daniel.
+Proyecto Académico de Bioingeniería – Universidad Nacional de Entre Ríos (UNER)  
+Facultad de Ingeniería | Cátedra: Taller de Bioingeniería
+
+**Autoras:** María Constanza Gastaldi, Marthina Gerstner Soltermann y Florencia Kessel.  
+**Asesor:** Daniel Zapata.
 
 ---
 
-## 1. Contexto y Objetivos del Proyecto
+## 1. Contexto y objetivos del proyecto
 
-El proyecto aborda el diseño teórico y prototipado virtual de un aplicador de ondas de choque extracorpóreas de baja intensidad (**ESWT**, *Extracorporeal Shock Wave Therapy*) enfocado en la estimulación de la angiogénesis y remodelación tisular en **cicatrices hipertróficas postquemadura**.
+El proyecto aborda el diseño teórico y el prototipado virtual de un aplicador de ondas de choque extracorpóreas de baja intensidad (**ESWT**, *Extracorporeal Shock Wave Therapy*), orientado al estudio de su potencial aplicación en la estimulación de la angiogénesis y la remodelación tisular en cicatrices hipertróficas postquemadura.
 
-### Delimitación de Responsabilidades en el Equipo
-* **Desarrollo de Software y Simulación Computacional (Esta aplicación):**
-  * Arquitectura modular del software en Python.
-  * Interfaz gráfica de escritorio con estándares biomédicos mediante **PySide6 (Qt)**.
-  * Modelado de datos del aplicador, tejidos, geometría y parámetros operativos.
-  * Servicios de validación, almacenamiento en formato JSON y exportación tabular en CSV.
-  * Módulos de visualización bidimensional y perfiles acústicos en **Matplotlib**.
-  * Preparación de interfaces desacopladas para la futura conexión con el motor físico numérico.
-* **Formulación Física y Diseño Mecánico-Acústico:**
-  * Trabajo en paralelo de diseño del casquete cóncavo, transductor piezoeléctrico, componentes eléctricos y acústicos que se conectarán a esta plataforma.
+El software constituye una plataforma de configuración, modelado y análisis computacional destinada a estudiar los parámetros operativos del aplicador y la propagación acústica en diferentes medios tisulares.
 
----
+### Delimitación de responsabilidades del equipo
 
-## 2. Requerimientos Operativos de Referencia (Anteproyecto)
+**Desarrollo de software y simulación computacional (esta aplicación)**
 
-* **Densidad de Flujo de Energía (EFD):** Rango de operación nominal entre $0.03\text{ mJ/mm}^2$ y $0.25\text{ mJ/mm}^2$ (valor de diseño preferente: $0.10\text{ mJ/mm}^2$).
-* **Frecuencia de Repetición de Pulsos (PRF):** $4.0\text{ Hz}$ a $5.0\text{ Hz}$.
-* **Profundidad Focal Terapéutica Objetivo:** $0.5\text{ cm}$ a $2.0\text{ cm}$ (alcanzando dermis profunda y tejido celular subcutáneo).
-* **Dosificación de Disparos:** Ráfagas configurables entre $10$ y $500\text{ pulsos/cm}^2$.
-* **Tecnología del Aplicador:** Generador piezoeléctrico focalizado sobre geometría cóncava con orientación angular ajustable.
+- Arquitectura modular del software en Python.
+- Interfaz gráfica de escritorio mediante PySide6 (Qt).
+- Modelado de datos del aplicador, tejidos, geometría y parámetros operativos.
+- Servicios de validación, almacenamiento en formato JSON y exportación tabular en CSV.
+- Módulos de visualización bidimensional y perfiles acústicos mediante Matplotlib.
+- Preparación de interfaces desacopladas para la integración del motor físico numérico.
 
----
+**Formulación física y diseño mecánico-acústico**
 
-## 3. Estructura Modular del Software
+- Diseño conceptual del casquete cóncavo y del transductor piezoeléctrico.
+- Análisis de los componentes eléctricos y acústicos.
+- Definición de las características geométricas y operativas del aplicador.
+- Estudio de la interacción entre el campo acústico y los distintos medios tisulares.
+
+## 2. Requerimientos operativos de referencia
+
+Los siguientes valores corresponden a los rangos de partida establecidos en el anteproyecto:
+
+| Parámetro | Valor de referencia |
+|---|---|
+| Densidad de flujo de energía (EFD) | 0,03–0,25 mJ/mm² |
+| EFD preferente de diseño | 0,10 mJ/mm² |
+| Frecuencia de repetición de pulsos (PRF) | 4–5 Hz |
+| Profundidad focal objetivo | 0,5–2 cm |
+| Dosificación | 10–500 pulsos/cm² |
+| Tecnología | Generador piezoeléctrico focalizado sobre geometría cóncava |
+
+Estos parámetros constituyen referencias de diseño y no deben interpretarse como un protocolo terapéutico clínicamente validado.
+
+## 3. Estructura modular del software
 
 ```text
 PROYECTO NUEVO TALLER/
 │
-├── main.py                       # Punto de entrada de la aplicación
-├── requirements.txt              # Dependencias de Python verificadas
-├── README.md                     # Documentación técnica
+├── main.py
+├── requirements.txt
+├── README.md
 │
-├── interfaz/                     # Interfaz Gráfica (PySide6)
-│   ├── ventana_principal.py      # Shell principal, navegación y barra de estado
-│   ├── panel_inicio.py           # Pantalla de bienvenida y resumen de estado
-│   ├── modulo_aplicador.py       # Configuración del cabezal y tecnología piezoeléctrica
-│   ├── modulo_geometria.py       # Superficie anatómica (plana / curva) y orientación
-│   ├── modulo_parametros.py      # Parámetros operativos y rangos de partida
-│   ├── modulo_tejidos.py         # Gestión de estratos tisulares y propiedades
-│   ├── modulo_simulacion.py      # Configuración de malla espacial y temporal
-│   ├── modulo_resultados.py      # Visualización gráfica de resultados acústicos
-│   ├── modulo_comparacion.py     # Comparativa de escenarios y orientaciones
-│   └── componentes.py            # Widgets reutilizables, tarjetas y estilos Qt
+├── interfaz/
+│   ├── ventana_principal.py
+│   ├── panel_inicio.py
+│   ├── modulo_aplicador.py
+│   ├── modulo_geometria.py
+│   ├── modulo_parametros.py
+│   ├── modulo_tejidos.py
+│   ├── modulo_simulacion.py
+│   ├── modulo_resultados.py
+│   ├── modulo_comparacion.py
+│   └── componentes.py
 │
-├── modelos/                      # Modelos de datos puros (Dataclasses)
-│   ├── aplicador.py              # Entidad del aplicador piezoeléctrico
-│   ├── cabezal.py                # Geometría cóncava y orientación angular
-│   ├── geometria.py              # Superficie cutánea y posición relativa
-│   ├── tejido.py                 # Capas tisulares (rho, c, Z, alpha)
-│   ├── parametros.py             # Parámetros operativos y dosimétricos
-│   ├── configuracion.py          # Objeto contenedor de la sesión completa
-│   └── resultados.py             # Estructura desacoplada para matrices acústicas
+├── modelos/
+│   ├── aplicador.py
+│   ├── cabezal.py
+│   ├── geometria.py
+│   ├── tejido.py
+│   ├── parametros.py
+│   ├── configuracion.py
+│   └── resultados.py
 │
-├── servicios/                    # Servicios de infraestructura y soporte
-│   ├── gestor_configuracion.py   # Persistencia en archivos JSON
-│   ├── validador.py              # Reglas de validación biofísica y rangos
-│   └── exportacion.py            # Exportador a CSV y reporte de sesión
+├── servicios/
+│   ├── gestor_configuracion.py
+│   ├── validador.py
+│   └── exportacion.py
 │
-├── fisica/                       # Interfaces para formulación física futura
-│   ├── onda_acustica.py          # Contrato para la ecuación de onda
-│   ├── focalizacion.py           # Contrato para el casquete cóncavo
-│   └── atenuacion.py             # Contrato para absorción tisular
+├── fisica/
+│   ├── onda_acustica.py
+│   ├── focalizacion.py
+│   └── atenuacion.py
 │
-├── simulacion/                   # Motor numérico
-│   ├── malla.py                  # Discretización espacial (x, z)
-│   ├── propagacion.py            # Contrato para el solver acústico
-│   └── motor_simulacion.py       # Fachada del motor (informa estado desacoplado)
+├── simulacion/
+│   ├── malla.py
+│   ├── propagacion.py
+│   └── motor_simulacion.py
 │
-├── visualizacion/                # Gráficos con Matplotlib
-│   ├── graficos.py               # Lienzos para p(x,z), perfiles axiales y tiempo
-│   └── representacion_geometrica.py # Esquema 2D del aplicador sobre el tejido
+├── visualizacion/
+│   ├── graficos.py
+│   └── representacion_geometrica.py
 │
 ├── datos/
-│   └── configuraciones/          # Almacén de archivos de configuración (.json)
+│   └── configuraciones/
 │
-└── tests/                        # Suite de pruebas unitarias automatizadas (PyTest)
+└── tests/
 ```
+
+*Nota: la estructura representa la organización modular prevista para el software. La implementación efectiva de cada módulo y sus funcionalidades debe verificarse en el código fuente.*
+
+## 4. Tecnologías utilizadas
+
+- **Python:** lenguaje principal de desarrollo.
+- **PySide6 (Qt):** construcción de la interfaz gráfica.
+- **Matplotlib:** visualización de resultados y perfiles acústicos.
+- **JSON:** almacenamiento de configuraciones.
+- **CSV:** exportación de datos y resultados.
+- **PyTest:** pruebas automatizadas del software.
+
+## 5. Instalación y ejecución
+
+### Requisitos previos
+
+- Python instalado.
+- Git instalado (opcional, para control de versiones).
+
+### Instalación de dependencias
+
+```bash
+pip install -r requirements.txt
+```
+
+### Ejecución de la aplicación
+
+```bash
+python main.py
+```
+
+## 6. Alcance y limitaciones
+
+El desarrollo corresponde a un proyecto académico de diseño conceptual, modelado y simulación computacional.
+
+La plataforma está orientada al análisis de parámetros operativos y al estudio de la propagación acústica. Los resultados obtenidos dependen de las ecuaciones, propiedades de los medios y modelos físicos efectivamente implementados.
+
+El simulador no constituye un dispositivo médico funcional ni reemplaza ensayos experimentales o validaciones clínicas. Tampoco permite afirmar efectos biológicos medidos, como angiogénesis o remodelación tisular, si estos no forman parte de un modelo biológico específico.
 
 ---
 
-## 4. Instalación y Ejecución
-
-1. **Instalar dependencias:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **Ejecutar la aplicación:**
-   ```bash
-   python main.py
-   ```
-
-=======
-# PROYECTOSIMULADORNUEVOESWT
-Simulador interactivo para el diseño y análisis de un aplicador de ondas de choque extracorpóreas (ESWT).
->>>>>>> ced6a313fcaf8942ea10e1be2898f7375b62d138
+**Universidad Nacional de Entre Ríos – Facultad de Ingeniería**  
+**Taller de Bioingeniería**
