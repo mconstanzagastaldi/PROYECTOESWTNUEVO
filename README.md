@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SIMULADOR ESWT
 **Diseño y análisis computacional de un aplicador piezoeléctrico de ondas de choque extracorpóreas**
 
@@ -104,3 +105,7 @@ PROYECTO NUEVO TALLER/
    python main.py
    ```
 
+=======
+# PROYECTOSIMULADORNUEVOESWT
+Simulador interactivo para el diseño y análisis de un aplicador de ondas de choque extracorpóreas (ESWT).
+>>>>>>> ced6a313fcaf8942ea10e1be2898f7375b62d138
