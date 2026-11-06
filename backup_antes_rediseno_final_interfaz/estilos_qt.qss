@@ -1,0 +1,57 @@
+/* Estilos para la UI tipo monitor médico */
+
+QWidget {
+    background-color: #0a0e14; /* fondo oscuro azul marino profundo */n    color: #f8fafc; /* texto blanco */n    font-family: "Segoe UI", "Helvetica", "Arial", sans-serif;
+}
+
+QFrame {
+    background-color: #111827; /* panel interno */n    border: 1px solid #1f293d; /* borde sutil */n    border-radius: 6px;
+}
+
+QPushButton {
+    background-color: #0284c7; /* cian activo */n    color: #f8fafc;
+    border: 1px solid #1f293d;
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+QPushButton:hover {
+    background-color: #00f0ff; /* cyan brillante */
+    border-color: #f8fafc;
+}
+QPushButton:pressed {
+    background-color: #0369a1;
+}
+
+QLabel {
+    font-size: 10pt;
+    color: #f8fafc;
+}
+
+/* Tarjetas de telemetría */
+QFrame[objectName="tarjetaTelemetria"] {
+    background-color: #040711; /* display digital */
+    border-left: 3px solid #00f0ff; /* acento cian */
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* Botón de selección activo */
+QPushButton[active="true"] {
+    background-color: #00f0ff;
+    border: 1px solid #00f0ff;
+}
+
+/* Tab bar */
+QTabBar::tab {
+    background: #111827;
+    color: #f8fafc;
+    padding: 6px 12px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    margin-right: 2px;
+}
+QTabBar::tab:selected {
+    background: #0b1120; /* acento más oscuro */
+    font-weight: bold;
+}
+
